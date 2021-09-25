@@ -1,7 +1,7 @@
 class User {
   late String id, title, name;
   late String? address;
-  late int age;
+  late double age;
 
   User({required this.id, required this.title, required this.name, this.address, required this.age});
 
@@ -20,6 +20,7 @@ class User {
     id = map['id'] as String;
     title = map['title'] as String;
     name = map['name'] as String;
-    age = map['age'] as int;
+    age = map['age'] as double;
+    address = map['address'] as String?;
   }
 }

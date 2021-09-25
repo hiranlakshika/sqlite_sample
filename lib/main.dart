@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sqlite_sample/add_user.dart';
+import 'package:sqlite_sample/user_list.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +37,31 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              child: Text('Database Actions'),
+            ),
+            ListTile(
+              title: const Text('Add User'),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddUser(),
+                  )),
+            ),
+            ListTile(
+              title: const Text('Users List'),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UsersList(),
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }

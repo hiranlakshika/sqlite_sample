@@ -7,8 +7,8 @@ import 'item.dart';
 class DatabaseHelper {
   static const _databaseName = "saegis.db";
   static const _databaseVersion = 1;
-  static const _tableUser = 'user';
-  static const _tableItem = 'item';
+  static const tableUser = 'user';
+  static const tableItem = 'item';
 
   DatabaseHelper._privateConstructor();
 
@@ -18,8 +18,8 @@ class DatabaseHelper {
     return _instance;
   }
 
-  final String _userCreate = "CREATE TABLE $_tableUser(id TEXT PRIMARY KEY, title TEXT NOT NULL, name TEXT NOT NULL, address TEXT, age REAL NOT NULL)";
-  final String _itemCreate = "CREATE TABLE $_tableItem(id TEXT PRIMARY KEY, name TEXT NOT NULL, price REAL NOT NULL, stock REAL NOT NULL)";
+  final String _userCreate = "CREATE TABLE $tableUser(id TEXT PRIMARY KEY, title TEXT NOT NULL, name TEXT NOT NULL, address TEXT, age REAL NOT NULL)";
+  final String _itemCreate = "CREATE TABLE $tableItem(id TEXT PRIMARY KEY, name TEXT NOT NULL, price REAL NOT NULL, stock REAL NOT NULL)";
 
   static Database? _database;
 
@@ -62,14 +62,14 @@ class DatabaseHelper {
     return await db!.delete(table, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<dynamic> selectByColumn(String table, String column) async {
+  Future<dynamic> selectByColumn(String table, String column, String where) async {
     Database? db = await database;
-    List<Map<String, Object?>> maps = await db!.query(table, where: '$column = ?', whereArgs: [column]);
+    List<Map<String, Object?>> maps = await db!.query(table, where: '$column = ?', whereArgs: [where]);
     if (maps.isNotEmpty) {
       switch (table) {
-        case _tableUser:
+        case tableUser:
           return User.fromMap(maps.first);
-        case _tableItem:
+        case tableItem:
           return Item.fromMap(maps.first);
       }
     }
@@ -81,9 +81,9 @@ class DatabaseHelper {
     final List<Map<String, Object?>> queryResult = await db!.query(table);
     return queryResult.map((e) {
       switch (table) {
-        case _tableUser:
+        case tableUser:
           return User.fromMap(e);
-        case _tableItem:
+        case tableItem:
           return Item.fromMap(e);
       }
     }).toList();
